@@ -1,7 +1,8 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:agenda_produtos/helpers/product_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProductPage extends StatefulWidget {
   final Product product;
@@ -75,9 +76,22 @@ class _ProductPageState extends State<ProductPage> {
                         image: _editedProduct.img != null &&
                                 _editedProduct.img.isNotEmpty
                             ? Image.file(File(_editedProduct.img)).image
-                            : const AssetImage("images/person.png")),
+                            : const AssetImage("images/person.png"),
+                    fit: BoxFit.cover
+                    ),
+
                   ),
                 ),
+                onTap: () {
+                  ImagePicker.pickImage(source: ImageSource.camera)
+                      .then((file) {
+                    if (file == null) return;
+
+                    setState(() {
+                      _editedProduct.img = file.path;
+                    });
+                  });
+                },
               ),
               TextField(
                 controller: _nameController,
