@@ -14,6 +14,8 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final ImagePicker _imagePicker = ImagePicker();
+
   final _nameController = TextEditingController();
   final _categoryController = TextEditingController();
   final _precoController = TextEditingController();
@@ -77,13 +79,12 @@ class _ProductPageState extends State<ProductPage> {
                                 _editedProduct.img.isNotEmpty
                             ? Image.file(File(_editedProduct.img)).image
                             : const AssetImage("images/person.png"),
-                    fit: BoxFit.cover
-                    ),
-
+                        fit: BoxFit.cover),
                   ),
                 ),
                 onTap: () {
-                  ImagePicker.pickImage(source: ImageSource.camera)
+                  _imagePicker
+                      .pickImage(source: ImageSource.camera)
                       .then((file) {
                     if (file == null) return;
 
